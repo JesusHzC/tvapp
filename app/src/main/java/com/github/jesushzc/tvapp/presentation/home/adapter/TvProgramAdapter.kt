@@ -1,5 +1,6 @@
 package com.github.jesushzc.tvapp.presentation.home.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import com.github.jesushzc.tvapp.databinding.TvShowItemBinding
 import com.github.jesushzc.tvapp.domain.model.TvProgram
 
 class TvProgramAdapter(
-    private val tvPrograms: List<TvProgram>
+    private val tvPrograms: MutableList<TvProgram>
 ): RecyclerView.Adapter<TvProgramAdapter.TvProgramViewHolder>() {
 
     private lateinit var context: Context
@@ -26,6 +27,13 @@ class TvProgramAdapter(
 
     override fun onBindViewHolder(holder: TvProgramViewHolder, position: Int) {
         holder.bind(tvPrograms[position])
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newTvPrograms: List<TvProgram>) {
+        tvPrograms.clear()
+        tvPrograms.addAll(newTvPrograms)
+        notifyDataSetChanged()
     }
 
     inner class TvProgramViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {

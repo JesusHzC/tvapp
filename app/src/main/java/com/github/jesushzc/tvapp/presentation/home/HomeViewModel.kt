@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jesushzc.tvapp.domain.model.TvProgram
 import com.github.jesushzc.tvapp.domain.use_case.DateFormatterUseCase
+import com.github.jesushzc.tvapp.domain.use_case.TvProgramByNameUseCase
 import com.github.jesushzc.tvapp.domain.use_case.TvProgramUseCase
 import com.github.jesushzc.tvapp.utils.Resource
 import com.github.jesushzc.tvapp.utils.TypeDateFormat
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val tvProgramUseCase: TvProgramUseCase,
+    private val tvProgramByNameUseCase: TvProgramByNameUseCase,
     private val dateFormatterUseCase: DateFormatterUseCase
 ): ViewModel() {
 
@@ -29,10 +31,14 @@ class HomeViewModel @Inject constructor(
     private val _tvPrograms: MutableStateFlow<List<TvProgram>> = MutableStateFlow(emptyList())
     val tvPrograms: StateFlow<List<TvProgram>> get() = _tvPrograms
 
-    fun getTvPrograms() {
+    fun getTvPrograms(name: String = "") {
         _isLoading.update { true }
         viewModelScope.launch {
-            when (val response = tvProgramUseCase.invoke(dateFormatterUseCase(TypeDateFormat.DATE_ISO))) {
+            val response = if (name.isEmpty())
+                tvProgramUseCase.invoke(dateFormatterUseCase(TypeDateFormat.DATE_ISO))
+            else
+                tvProgramByNameUseCase.invoke(name)
+            when (response) {
                 is Resource.Success -> {
                     _tvPrograms.update { response.data?.tvPrograms ?: emptyList() }
                     _isLoading.update { false }

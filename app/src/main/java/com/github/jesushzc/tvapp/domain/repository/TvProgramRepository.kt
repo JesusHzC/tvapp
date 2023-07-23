@@ -7,4 +7,6 @@ interface TvProgramRepository {
 
     suspend fun getTvPrograms(date: String): Resource<TvPrograms>
 
+    suspend fun getTvProgramsByName(name: String): Resource<TvPrograms>
+
 }

@@ -9,6 +9,9 @@ interface TvMazeApi {
     @GET("schedule?country=US")
     suspend fun getTvPrograms(@Query("date") date: String): List<TvProgram>
 
+    @GET("search/shows")
+    suspend fun getTvProgramsByName(@Query("q") name: String): List<TvProgram>
+
     companion object {
         const val BASE_URL = "https://api.tvmaze.com/"
     }

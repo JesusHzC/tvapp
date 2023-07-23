@@ -19,4 +19,14 @@ class TvProgramRepositoryImpl (
         }
     }
 
+    override suspend fun getTvProgramsByName(name: String): Resource<TvPrograms> {
+        return try {
+            val response = api.getTvProgramsByName(name)
+            Resource.Success(data = TvPrograms(response))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Resource.Error(message = "Ocurrió un error.")
+        }
+    }
+
 }

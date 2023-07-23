@@ -1,6 +1,8 @@
 package com.github.jesushzc.tvapp.presentation.home
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +41,7 @@ class HomeFragment : Fragment() {
         setupToolbar()
         viewModel.getTvPrograms()
         initObservers()
+        setupEditTextSearch()
     }
 
     private fun setupToolbar() {
@@ -55,8 +58,24 @@ class HomeFragment : Fragment() {
                 tvDate.show()
                 ivSearch.show()
                 ivClose.hide()
+                etSearch.text.clear()
+                viewModel.getTvPrograms()
             }
         }
+    }
+
+    private fun setupEditTextSearch() {
+        binding.toolbar.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.getTvPrograms(s.toString())
+            }
+        })
     }
 
     private fun initObservers() {
@@ -65,9 +84,13 @@ class HomeFragment : Fragment() {
                 if (data.isNotEmpty()) {
                     binding.emptyDataLayout.tvEmptyData.hide()
                     binding.rvShows.show()
-                    adapter = TvProgramAdapter(data)
-                    binding.rvShows.layoutManager = LinearLayoutManager(requireContext())
-                    binding.rvShows.adapter = adapter
+                    if (this@HomeFragment::adapter.isInitialized)
+                        adapter.updateData(data)
+                    else {
+                        adapter = TvProgramAdapter(data.toMutableList())
+                        binding.rvShows.layoutManager = LinearLayoutManager(requireContext())
+                        binding.rvShows.adapter = adapter
+                    }
                 } else {
                     binding.rvShows.hide()
                     binding.emptyDataLayout.tvEmptyData.show()
