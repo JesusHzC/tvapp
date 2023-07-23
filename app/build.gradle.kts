@@ -25,6 +25,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            isDebuggable = true
         }
     }
     compileOptions {

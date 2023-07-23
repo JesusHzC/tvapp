@@ -36,8 +36,27 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
         viewModel.getTvPrograms()
         initObservers()
+    }
+
+    private fun setupToolbar() {
+        binding.toolbar.apply {
+            tvDate.text = viewModel.getTitleDate()
+            ivSearch.setOnClickListener {
+                etSearch.show()
+                tvDate.hide()
+                ivSearch.hide()
+                ivClose.show()
+            }
+            ivClose.setOnClickListener {
+                etSearch.hide()
+                tvDate.show()
+                ivSearch.show()
+                ivClose.hide()
+            }
+        }
     }
 
     private fun initObservers() {

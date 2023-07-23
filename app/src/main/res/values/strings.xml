@@ -5,4 +5,5 @@
     <string name="negative_button">Cancelar</string>
     <string name="retry_button">Reintentar</string>
     <string name="empty_data">No se encontraron resultados</string>
+    <string name="search">Buscar...</string>
 </resources>

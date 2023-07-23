@@ -49,4 +49,8 @@ class HomeViewModel @Inject constructor(
         _isError.update { Pair(isError, "") }
     }
 
+    fun getTitleDate(): String {
+        return dateFormatterUseCase(TypeDateFormat.DATE_FULL_STRING)
+    }
+
 }
