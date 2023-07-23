@@ -10,7 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -32,7 +32,7 @@ object AppModule {
     fun provideTvMazeApi(client: OkHttpClient): TvMazeApi {
         return Retrofit.Builder()
             .baseUrl(TvMazeApi.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
             .create(TvMazeApi::class.java)

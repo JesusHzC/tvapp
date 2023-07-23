@@ -1,11 +1,11 @@
 package com.github.jesushzc.tvapp.domain.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 
 data class Schedule (
 
-  @field:Json(name = "time" ) var time : String?           = null,
-  @field:Json(name = "days" ) var days : ArrayList<String> = arrayListOf()
+  @SerializedName("time" ) var time : String?           = null,
+  @SerializedName("days" ) var days : ArrayList<String> = arrayListOf()
 
 )

@@ -1,12 +1,12 @@
 package com.github.jesushzc.tvapp.domain.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 
 data class Externals (
 
-  @field:Json(name = "tvrage"  ) var tvrage  : String? = null,
-  @field:Json(name = "thetvdb" ) var thetvdb : Int?    = null,
-  @field:Json(name = "imdb"    ) var imdb    : String? = null
+  @SerializedName("tvrage"  ) var tvrage  : String? = null,
+  @SerializedName("thetvdb" ) var thetvdb : Int?    = null,
+  @SerializedName("imdb"    ) var imdb    : String? = null
 
 )

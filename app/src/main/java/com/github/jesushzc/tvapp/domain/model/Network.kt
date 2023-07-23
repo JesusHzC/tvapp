@@ -1,13 +1,13 @@
 package com.github.jesushzc.tvapp.domain.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 
 data class Network (
 
-  @field:Json(name = "id"           ) var id           : Int?     = null,
-  @field:Json(name = "name"         ) var name         : String?  = null,
-  @field:Json(name = "country"      ) var country      : Country? = Country(),
-  @field:Json(name = "officialSite" ) var officialSite : String?  = null
+  @SerializedName("id"           ) var id           : Int?     = null,
+  @SerializedName("name"         ) var name         : String?  = null,
+  @SerializedName("country"      ) var country      : Country? = Country(),
+  @SerializedName("officialSite" ) var officialSite : String?  = null
 
 )

@@ -1,10 +1,10 @@
 package com.github.jesushzc.tvapp.domain.model
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 
 data class Rating (
 
-  @field:Json(name = "average" ) var average : Double? = null
+  @SerializedName("average" ) var average : Double? = null
 
 )

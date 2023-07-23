@@ -12,9 +12,10 @@ class TvProgramRepositoryImpl (
     override suspend fun getTvPrograms(date: String): Resource<TvPrograms> {
         return try {
             val response = api.getTvPrograms(date)
-            Resource.Success(data = response)
+            Resource.Success(data = TvPrograms(response))
         } catch (e: Exception) {
-            Resource.Error(message = e.message ?: "Ocurrió un error.")
+            e.printStackTrace()
+            Resource.Error(message = "Ocurrió un error.")
         }
     }
 

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TvApp</string>
+    <string name="date_time_string">%s | %s</string>
+    <string name="positive_button">OK</string>
+    <string name="negative_button">Cancelar</string>
+    <string name="retry_button">Reintentar</string>
+    <string name="empty_data">No se encontraron resultados</string>
 </resources>
