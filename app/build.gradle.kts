@@ -25,6 +25,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            isDebuggable = true
         }
     }
     compileOptions {
@@ -34,11 +35,16 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
+    implementation(AndroidX.fragmentKtx)
+    implementation(AndroidX.splashScreen)
 
     implementation(Google.material)
 
@@ -47,8 +53,17 @@ dependencies {
     implementation(Retrofit.okHttp)
     implementation(Retrofit.retrofit)
     implementation(Retrofit.okHttpLoggingInterceptor)
-    implementation(Retrofit.moshiConverter)
+    implementation(Retrofit.gsonConverter)
 
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)
+
+    implementation(Lifecycle.lifecycleViewModel)
+
+    implementation(Navigation.navigationUiKtx)
+    implementation(Navigation.navigationFragmentKtx)
+
+    implementation(Glide.glide)
+
+    implementation(Coroutines.coroutines)
 }
