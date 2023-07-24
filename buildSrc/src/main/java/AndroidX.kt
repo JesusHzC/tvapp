@@ -7,4 +7,7 @@ object AndroidX {
 
     private const val fragmentKtxVersion = "1.5.5"
     const val fragmentKtx = "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+
+    private const val splashScreenVersion = "1.0.0-alpha02"
+    const val splashScreen = "androidx.core:core-splashscreen:$splashScreenVersion"
 }

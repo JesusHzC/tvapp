@@ -3,6 +3,7 @@ package com.github.jesushzc.tvapp.presentation.detail
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -76,6 +77,7 @@ class DetailFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.cast.collect { data ->
                 if (data.isNotEmpty()) {
+                    binding.tvShowTalents.show()
                     binding.rvShowTalents.show()
                     adapter = CastAdapter(data)
                     binding.rvShowTalents.layoutManager =
@@ -86,6 +88,7 @@ class DetailFragment : Fragment() {
                         )
                     binding.rvShowTalents.adapter = adapter
                 } else {
+                    binding.tvShowTalents.hide()
                     binding.rvShowTalents.hide()
                 }
             }
@@ -111,8 +114,10 @@ class DetailFragment : Fragment() {
                         errorMessage
                     ) {
                         viewModel.setIsError(false)
-                        if (idTvProgram != null && idTvProgram != 0)
+                        if (idTvProgram != null && idTvProgram != 0) {
                             viewModel.getDetailShow(idTvProgram!!)
+                            viewModel.getCast(idTvProgram!!)
+                        }
                     }
                 }
             }
@@ -127,25 +132,27 @@ class DetailFragment : Fragment() {
                 .into(ivShowPoster)
 
             tvShowName.text = show.name
-            tvShowNetwork.text = show.network?.name
-            tvShowRanking.text = show.rating?.average.toString()
+            tvShowNetwork.text = show.network?.name ?: ""
+            tvShowRanking.text = if (show.rating?.average != null) show.rating?.average.toString() else getString(
+                R.string.no_rating
+            )
 
             btnGoToWebsite.setOnClickListener {
                 openNavigator(show.url)
             }
 
-            tvShowSinopsis.text = show.summary
-            tvShowGenres.text = show.genres.joinToString(", ")
+            tvShowSinopsis.text = Html.fromHtml(show.summary, Html.FROM_HTML_MODE_COMPACT)
+            tvShowGenres.text = show.genres.joinToString(", ").ifEmpty { context?.getString(R.string.no_genres) }
             tvShowSchedule.text = requireContext().getString(
                 R.string.date_time_string,
-                show.schedule?.time,
-                show.schedule?.days?.joinToString(", ")
+                show.schedule?.time?.ifEmpty { context?.getString(R.string.no_time) },
+                show.schedule?.days?.joinToString(", ")?.ifEmpty { context?.getString(R.string.no_days) }
             )
         }
     }
 
     private fun openNavigator(url: String?) {
-        if (url != null) {
+        if (url.isNullOrEmpty().not()) {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)
             startActivity(intent)

@@ -44,6 +44,7 @@ dependencies {
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.fragmentKtx)
+    implementation(AndroidX.splashScreen)
 
     implementation(Google.material)
 

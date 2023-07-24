@@ -43,11 +43,11 @@ class TvProgramAdapter(
 
         fun bind(show: TvProgram, onClickListener: (TvProgram) -> Unit) {
             binding.tvShowName.text = show.show?.name
-            binding.tvShowNetwork.text = show.show?.network?.name
+            binding.tvShowNetwork.text = show.show?.network?.name ?: ""
             binding.tvShowDatetime.text = context.getString(
                 R.string.date_time_string,
-                show.show?.schedule?.time,
-                show.show?.schedule?.days?.firstOrNull()
+                show.show?.schedule?.time?.ifEmpty { context.getString(R.string.no_time) },
+                show.show?.schedule?.days?.firstOrNull() ?: context.getString(R.string.no_days)
             )
 
             Glide.with(view.context)

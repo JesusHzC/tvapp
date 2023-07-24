@@ -56,8 +56,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#D82525"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent"
             android:layout_marginVertical="@dimen/small_space"/>
 
     </LinearLayout>

@@ -4,6 +4,13 @@ import android.app.AlertDialog
 import android.content.Context
 import com.github.jesushzc.tvapp.R
 
+/**
+ * Created by Jesus Hernandez on 24/07/2023.
+ * @param context Context
+ * @param message String
+ * @param retryButton Function<Unit>
+ * Function to show a dialog with an error message and a retry button
+ */
 fun showDialogError(
     context: Context,
     message: String,
