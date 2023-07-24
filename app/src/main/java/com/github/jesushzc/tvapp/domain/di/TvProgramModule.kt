@@ -1,8 +1,10 @@
 package com.github.jesushzc.tvapp.domain.di
 
 import com.github.jesushzc.tvapp.domain.repository.TvProgramRepository
+import com.github.jesushzc.tvapp.domain.use_case.CastUseCase
 import com.github.jesushzc.tvapp.domain.use_case.DateFormatterUseCase
 import com.github.jesushzc.tvapp.domain.use_case.TvProgramByNameUseCase
+import com.github.jesushzc.tvapp.domain.use_case.TvProgramDetailUseCase
 import com.github.jesushzc.tvapp.domain.use_case.TvProgramUseCase
 import dagger.Module
 import dagger.Provides
@@ -30,6 +32,26 @@ object TvProgramModule {
         repository: TvProgramRepository
     ): TvProgramByNameUseCase {
         return TvProgramByNameUseCase(
+            repository
+        )
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideTvProgramDetailUseCase(
+        repository: TvProgramRepository
+    ): TvProgramDetailUseCase {
+        return TvProgramDetailUseCase(
+            repository
+        )
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideCastUseCase(
+        repository: TvProgramRepository
+    ): CastUseCase {
+        return CastUseCase(
             repository
         )
     }

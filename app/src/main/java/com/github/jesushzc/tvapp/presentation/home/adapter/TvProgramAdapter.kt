@@ -12,7 +12,8 @@ import com.github.jesushzc.tvapp.databinding.TvShowItemBinding
 import com.github.jesushzc.tvapp.domain.model.TvProgram
 
 class TvProgramAdapter(
-    private val tvPrograms: MutableList<TvProgram>
+    private val tvPrograms: MutableList<TvProgram>,
+    private val onClickListener: (TvProgram) -> Unit
 ): RecyclerView.Adapter<TvProgramAdapter.TvProgramViewHolder>() {
 
     private lateinit var context: Context
@@ -26,7 +27,7 @@ class TvProgramAdapter(
     override fun getItemCount(): Int = tvPrograms.size
 
     override fun onBindViewHolder(holder: TvProgramViewHolder, position: Int) {
-        holder.bind(tvPrograms[position])
+        holder.bind(tvPrograms[position], onClickListener)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -40,7 +41,7 @@ class TvProgramAdapter(
 
         private val binding = TvShowItemBinding.bind(view)
 
-        fun bind(show: TvProgram) {
+        fun bind(show: TvProgram, onClickListener: (TvProgram) -> Unit) {
             binding.tvShowName.text = show.show?.name
             binding.tvShowNetwork.text = show.show?.network?.name
             binding.tvShowDatetime.text = context.getString(
@@ -53,6 +54,8 @@ class TvProgramAdapter(
                 .load(show.show?.image?.medium)
                 .centerCrop()
                 .into(binding.ivShowPoster)
+
+            view.setOnClickListener { onClickListener(show) }
         }
 
     }

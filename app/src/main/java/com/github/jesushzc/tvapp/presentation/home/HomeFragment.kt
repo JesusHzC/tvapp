@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.jesushzc.tvapp.R
 import com.github.jesushzc.tvapp.databinding.FragmentHomeBinding
+import com.github.jesushzc.tvapp.presentation.detail.DetailFragment.Companion.ID_TV_PROGRAM
 import com.github.jesushzc.tvapp.presentation.home.adapter.TvProgramAdapter
 import com.github.jesushzc.tvapp.utils.hide
 import com.github.jesushzc.tvapp.utils.show
@@ -39,13 +42,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+        setupRecyclerView()
         viewModel.getTvPrograms()
         initObservers()
         setupEditTextSearch()
     }
 
     private fun setupToolbar() {
-        binding.toolbar.apply {
+        binding.toolbarLayout.apply {
             tvDate.text = viewModel.getTitleDate()
             ivSearch.setOnClickListener {
                 etSearch.show()
@@ -65,7 +69,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupEditTextSearch() {
-        binding.toolbar.etSearch.addTextChangedListener(object : TextWatcher {
+        binding.toolbarLayout.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -78,6 +82,19 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun setupRecyclerView() {
+        adapter = TvProgramAdapter(mutableListOf()) { tvProgram ->
+            val bundle = Bundle()
+            bundle.putInt(ID_TV_PROGRAM, tvProgram.show?.id ?: 0)
+            findNavController().navigate(
+                R.id.action_homeFragment_to_detailFragment,
+                bundle
+            )
+        }
+        binding.rvShows.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvShows.adapter = adapter
+    }
+
     private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.tvPrograms.collect { data ->
@@ -86,11 +103,6 @@ class HomeFragment : Fragment() {
                     binding.rvShows.show()
                     if (this@HomeFragment::adapter.isInitialized)
                         adapter.updateData(data)
-                    else {
-                        adapter = TvProgramAdapter(data.toMutableList())
-                        binding.rvShows.layoutManager = LinearLayoutManager(requireContext())
-                        binding.rvShows.adapter = adapter
-                    }
                 } else {
                     binding.rvShows.hide()
                     binding.emptyDataLayout.tvEmptyData.show()
@@ -124,5 +136,4 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
 }

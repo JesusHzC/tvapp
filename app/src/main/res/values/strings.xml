@@ -6,4 +6,10 @@
     <string name="retry_button">Reintentar</string>
     <string name="empty_data">No se encontraron resultados</string>
     <string name="search">Buscar...</string>
+    <string name="go_to_website">Visitar sitio</string>
+    <string name="sinopsis">Sinópsis:</string>
+    <string name="genres">Géneros:</string>
+    <string name="schedule">Horarios:</string>
+    <string name="talents">Talentos:</string>
+    <string name="error_opening_url">Error al abrir el sitio</string>
 </resources>

@@ -6,7 +6,7 @@
     tools:context=".presentation.home.HomeFragment">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarLayout"
         layout="@layout/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/tv_show_item"
-        android:layout_below="@id/toolbar"/>
+        android:layout_below="@id/toolbarLayout"/>
 
     <include
         android:id="@+id/loader_layout"

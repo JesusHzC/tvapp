@@ -24,6 +24,7 @@ data class Show (
   @SerializedName("externals"      ) var externals      : Externals?        = Externals(),
   @SerializedName("image"          ) var image          : Image?            = Image(),
   @SerializedName("summary"        ) var summary        : String?           = null,
-  @SerializedName("updated"        ) var updated        : Int?              = null
+  @SerializedName("updated"        ) var updated        : Int?              = null,
+  @SerializedName("_links"         ) var links          : Links?            = Links(),
 
 )
